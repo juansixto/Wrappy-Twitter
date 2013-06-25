@@ -18,17 +18,18 @@ access_token_secret="nZ2Cpic5cnAxI6FcjQYmRbIc77jHWlUWCS2WAD4qg"
 number_id = 0
 number_save = 0
 page_number = 1
-excel_max = 1000
+excel_max = 15
+style0 = xlwt.easyxf('font: name Times New Roman, colour black, bold on')
+style1 = xlwt.easyxf('',num_format_str='DD-MMM-YY')
+wb = xlwt.Workbook()
+ws = wb.add_sheet('Hoja 1',cell_overwrite_ok=True)
 
 class StdOutListener(StreamListener):
     """ A listener handles tweets are the received from the stream.
     This is a basic listener that just prints received tweets to stdout.
 
     """
-    style0 = xlwt.easyxf('font: name Times New Roman, colour black, bold on')
-    style1 = xlwt.easyxf('',num_format_str='DD-MMM-YY')
-    wb = xlwt.Workbook()
-    ws = wb.add_sheet('Hoja 1',cell_overwrite_ok=True)
+
     
     def on_data(self, data):
         global number_save, number_id, page_number, ws
@@ -42,8 +43,6 @@ class StdOutListener(StreamListener):
             page_number+=1
             number_id = 0
             ws = wb.add_sheet('Hoja '+ str(page_number),cell_overwrite_ok=True)            
-            
-        
         if(number_save > 10):
             wb.save('Data'+ str(datetime.now().strftime("%Y-%m-%d")) +'.xls')
             number_save = 0
