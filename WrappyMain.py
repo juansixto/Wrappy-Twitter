@@ -53,6 +53,7 @@ def start_data():
     ws.write(0,22, 'hashtags', style1)
     ws.write(0,23, 'urls', style1)
     ws.write(0,24, 'user_mentions', style1)
+    ws.write(0,25, 'text', style1)
         
 
     
@@ -94,14 +95,11 @@ class StdOutListener(StreamListener):
         ws.write(number_id,22, str(myJson['entities']['hashtags']), style1)
         ws.write(number_id,23, str(myJson['entities']['urls']), style1)
         ws.write(number_id,24, str(myJson['entities']['user_mentions']), style1)
-        
-        
-        print data
-        print myJson['text']
+        ws.write(number_id,25, myJson['text'], style1)
+
         number_id+=1
         if(number_save > 10):
             wb.save('Data'+ str(datetime.now().strftime("%Y-%m-%d")) +'.xls')
-            print "Save"
             number_save = 0
         else:
             number_save+=1
